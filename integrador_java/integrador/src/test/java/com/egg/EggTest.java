@@ -1,10 +1,8 @@
-package tests;
+package com.egg;
 
-import integrador.Practica;
-import java.util.ArrayList;
-import java.util.Arrays;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class EggTest {
 
