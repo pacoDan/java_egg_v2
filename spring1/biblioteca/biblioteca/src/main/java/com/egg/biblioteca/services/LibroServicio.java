@@ -10,8 +10,9 @@ import com.egg.biblioteca.repositorio.RepoEditorial;
 import com.egg.biblioteca.repositorio.RepoLibro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,38 +54,69 @@ public class LibroServicio {
     }
 
 
-    public void modificarLibro(Long isbn, String titulo, String idAutor, String idEditorial, Integer ejemplares) throws MiExcepcion{
-        validar(isbn,titulo,ejemplares,idAutor,idEditorial);
-        
-        Optional<Libro> respuesta= libroRepositorio.findById(isbn);
-        Optional<Autor> respuestaAutor= autorRepositorio.findById(idAutor);
-        Optional<Editorial> respuestaEditorial= editorialRepositorio.findById(idEditorial);
-        Autor autor= new Autor() ;
+    @Transactional
+    public void modificarLibro(Long isbn, String titulo, Integer ejemplares, String idAutor, String idEditorial) throws  MiExcepcion {
+
+        validar(isbn, titulo, ejemplares, idAutor, idEditorial);
+
+        Optional<Libro> respuesta = libroRepositorio.findById(isbn);
+        Optional<Autor> respuestaAutor = autorRepositorio.findById(idAutor);
+        Optional<Editorial> respuestaEditorial = editorialRepositorio.findById(idEditorial);
+
+        Autor autor = new Autor();
         Editorial editorial= new Editorial();
+
         if(respuestaAutor.isPresent()){
-            autor=respuestaAutor.get();
+
+            autor = respuestaAutor.get();
         }
+
         if(respuestaEditorial.isPresent()){
-            editorial=respuestaEditorial.get();
+
+            editorial = respuestaEditorial.get();
         }
+
         if(respuesta.isPresent()){
+
             Libro libro = respuesta.get();
+
+
             libro.setTitulo(titulo);
-            libro.setAutor(autor);
-            libro.setEditorial(editorial);
+
             libro.setEjemplares(ejemplares);
 
-            libroRepositorio.save(libro);
-        }
+            libro.setAutor(autor);
 
+            libro.setEditorial(editorial);
+
+
+            libroRepositorio.save(libro);
+
+        }
     }
 
-    private  void validar(Long isbn, String titulo, Integer ejemplares, String idAutor, String idEditorial) throws MiExcepcion {
+    @Transactional(readOnly = true)
+    public Libro getOne(Long isbn){
+       return libroRepositorio.getOne(isbn);
+    }
 
-            if (isbn == null) throw new MiExcepcion("el isb no puede ser nulo");
-            if (titulo.isEmpty()) throw new MiExcepcion("el titulo no puede ser nulo o vacio ");
-            if (ejemplares == null) throw new MiExcepcion("los ejemplares no pueden ser nulos");
-            if (idAutor == null) throw new MiExcepcion("el idAutor no puede ser nulo");
-            if (idEditorial == null) throw new MiExcepcion("el idEditorial no puede ser nulo");
+    private void validar(Long isbn, String titulo, Integer ejemplares, String idAutor, String idEditorial) throws MiExcepcion {
+
+        if(isbn == null){
+            throw new MiExcepcion("el isbn no puede ser nulo"); //
+        }
+        if(titulo.isEmpty() || titulo == null){
+            throw new MiExcepcion("el titulo no puede ser nulo o estar vacio");
+        }
+        if(ejemplares == null){
+            throw new MiExcepcion("ejemplares no puede ser nulo");
+        }
+        if(idAutor.isEmpty() || idAutor == null){
+            throw new MiExcepcion("el Autor no puede ser nulo o estar vacio");
+        }
+
+        if(idEditorial.isEmpty() || idEditorial == null){
+            throw new MiExcepcion("La Editorial no puede ser nula o estar vacia");
+        }
     }
 }
