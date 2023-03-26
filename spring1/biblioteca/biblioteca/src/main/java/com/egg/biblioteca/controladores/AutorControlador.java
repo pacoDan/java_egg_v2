@@ -36,7 +36,7 @@ public class AutorControlador {
             return "autor_form.html";
         }
 
-        return "autor_form.html";
+        return "index.html";
     }
 
     @GetMapping("/lista")
