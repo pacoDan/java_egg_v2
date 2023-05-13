@@ -2,17 +2,11 @@
 package com.egg.biblioteca.entidades;
 
 import java.util.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.ManyToOne;
-//import javax.persistence.Temporal;
-//import javax.persistence.TemporalType;
-import jakarta.persistence.TemporalType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Libro {

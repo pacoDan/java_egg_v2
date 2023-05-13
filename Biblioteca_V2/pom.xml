@@ -11,12 +11,10 @@
     <groupId>com.egg</groupId>
     <artifactId>biblioteca</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Biblioteca_V1</name>
-    <description>Proyecto de Biblioteca para Egg - Version 1.</description>
+    <name>Biblioteca_V2</name>
+    <description>Proyecto de Biblioteca para Egg.</description>
     <properties>
-<!--        <java.version>1.8</java.version>-->
-        <java.version>17</java.version>
-        
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -42,7 +40,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 
